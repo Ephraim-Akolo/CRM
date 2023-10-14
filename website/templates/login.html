@@ -1,0 +1,13 @@
+    <h1>Login</h1>
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Name" name="username" required>
+        </div>
+        <br>
+        <div class="mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-secondary">Login</button>
+    </form>

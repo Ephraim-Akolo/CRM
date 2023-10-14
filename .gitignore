@@ -1,3 +1,4 @@
 secret.py
 *__init__*
 *__pycache__*
+*.sqlite3

@@ -3,21 +3,52 @@
 {% block content %}
 <div class="col-md-6 offset-md-3">
     {% if user.is_authenticated %}
-    <h1>Hello World!</h1>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Email</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+        
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{record.email}}</td>
+            <td>{{record.name}}</td>
+            <td>{{record.age}}</td>
+            <td><a href="{% url 'update_delete' record.id %}">
+                {% if record.seen %}
+                Verified
+                {% else %}
+                Unverified
+                {% endif %}
+            </a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <br><br><br>
+      <div class="card " style="width: 18rem;">
+        <div class="card-header">
+          Add A Record
+        </div>
+        <div style="padding-bottom: 10px;">
+          <form action="{% url 'record' %}"  method="POST" class="col-md-6 offset-md-3">
+            {{ recordform.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Add</button>
+          </form>
+        </div>
+      </div>
+      
     {% else %}
-    <h1>Login</h1>
-    <form method="POST" action="{% url 'home' %}">
-        {% csrf_token %}
-        <div class="mb-3">
-            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Name" name="username" required>
-        </div>
-        <br>
-        <div class="mb-3">
-            <input type="password" class="form-control" name="password" placeholder="Password" required>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-secondary">Login</button>
-    </form>
+    {% include 'login.html' %}
     {% endif %}
 </div>
 
